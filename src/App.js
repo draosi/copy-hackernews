@@ -3,12 +3,13 @@ import {useEffect, useState} from 'react'
 import SearchBar from './components/SearchBar'
 import Card from './components/Card';
 import './App.css';
+import Loader from './components/Loader'
 
 const App = () => {
 
     const [data, setData] = useState([])
     const [query, setQuery] = useState('')
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
 
     const fetchData = () => {
         axios.get(`http://hn.algolia.com/api/v1/search?query=${query}`)
@@ -28,7 +29,7 @@ const App = () => {
             {/* {query}
             <input onChange={(e) => setQuery(e.target.value)}/> */}
         <SearchBar query={query} setQuery={setQuery}/>
-        {loading && 
+        {loading ? 
         data.filter(el => el.title !==null).map((e, i) => {
             return(
                 <div key={i} className="Card"  >
@@ -37,7 +38,11 @@ const App = () => {
                 
             )
        })
-       }
+       : 
+       <div style={{display:'flex', justifyContent: 'center', alignItems:"center", marginTop:'50px'}}>
+        <Loader/>
+       </div>
+        }
         </div>
     )
 }
