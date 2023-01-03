@@ -17,8 +17,6 @@ const App = () => {
         })
         .catch((err) => console.log(err))
     }
-
-    const newData = data.filter((e) => e.title !== null)
     
 
     useEffect(() => {
@@ -30,17 +28,15 @@ const App = () => {
             {/* {query}
             <input onChange={(e) => setQuery(e.target.value)}/> */}
         <SearchBar query={query} setQuery={setQuery}/>
-        {loading && newData.length > 1 ?
-        newData.map((e, i) => {
+        {loading && 
+        data.filter(el => el.title !==null).map((e, i) => {
             return(
-                
                 <div key={i} className="Card"  >
                     <Card {...e} />
                 </div>
                 
             )
        })
-       : ''
        }
         </div>
     )
