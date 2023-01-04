@@ -41,7 +41,14 @@
 .Card{
   display: inline-block;
   text-align: center;
-  margin: 5px auto;
+  margin: 10px 60px;
   height:150px;
   width: 90%;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
 }
