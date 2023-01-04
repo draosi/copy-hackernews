@@ -12,38 +12,42 @@ const App = () => {
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [count, setCount] = useState(1);
-
-  const fetchData = async () => {
-    await axios
-      .get(
-        `http://hn.algolia.com/api/v1/search?query=${query}&hitsPerPage=5&page=${count}`
-      )
-      .then((res) => {
-        
-        setData(res.data.hits);
-        setLoading(true);
-      })
-      .catch((err) => console.log(err));
-  };
+  const [numberOfHits, setNumberOfHits] = useState(15);
 
   useEffect(() => {
-    fetchData();
-  }, [query, count]);
+    fetchData2();
+    console.log(data);
+  }, [query, count, numberOfHits]);
+
+  const fetchData2 = async () => {
+    try {
+      const firstCall = await axios.get(
+        `http://hn.algolia.com/api/v1/search?query=${query}&hitsPerPage=${numberOfHits}&page=${count}`
+      );
+      const secondCall = await firstCall.data.hits.filter(
+        (el) => el.title && el.author && el.url
+      );
+      secondCall.length = 5;
+      setData(secondCall);
+      setLoading(true);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+console.log(data)
 
   return (
     <div>
       <SearchBar query={query} setQuery={setQuery} />
       {loading ? (
-        data
-          .filter((el) => el.title && el.author && el.url )
-          .map((e, i) => {
-            {/* console.log(`${e.author} : ${e.title}`); */}
-            return (
-              <div key={i} className="Card">
-                <Card {...e} />
-              </div>
-            );
-          })
+        data.map((e, i) => {
+          return (
+            <div key={i} className="Card">
+              <Card {...e} />
+            </div>
+          );
+        })
       ) : (
         <div
           style={{

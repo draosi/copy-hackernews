@@ -4,6 +4,7 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import './Card.css'
 
 // const bull = (
 //   <Box
@@ -14,18 +15,18 @@ import Typography from "@mui/material/Typography";
 //   </Box>
 // );
 
-const BasicCard = ({ title, author, url }) => {
+const BasicCard = ({ title, author, url, num_comments}) => {
 return(
   <Card sx={{ minWidth: 275 }}>
       <CardContent>
         <Typography variant="h5" component="div">
-          <b>{title}</b>
+        <a href={url}><b>{title}</b></a>
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          {author}
+          By {author}
         </Typography>
         <Typography variant="body2">
-          <a href={url}>{url}</a>
+          {num_comments} comments
         </Typography>
       </CardContent>
     </Card>
