@@ -22,7 +22,7 @@ const App = () => {
   const fetchData2 = async () => {
     try {
       const firstCall = await axios.get(
-        `http://hn.algolia.com/api/v1/search?query=${query}&hitsPerPage=${numberOfHits}&page=${count}`
+        `https://hn.algolia.com/api/v1/search?query=${query}&hitsPerPage=${numberOfHits}&page=${count}`
       );
       const secondCall = await firstCall.data.hits.filter(
         (el) => el.title && el.author && el.url
