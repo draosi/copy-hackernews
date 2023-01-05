@@ -6,6 +6,8 @@ import "./App.css";
 import Loader from "./components/Loader";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
+import {Routes,Route, Link} from 'react-router-dom' 
+import CardDetails from "./components/CardDetails";
 
 const App = () => {
   const [data, setData] = useState([]);
@@ -42,6 +44,7 @@ console.log(data)
       <SearchBar query={query} setQuery={setQuery} />
       {loading ? (
         data.map((e, i) => {
+          console.log(e)
           return (
             <div key={i} className="Card">
               <Card {...e} />

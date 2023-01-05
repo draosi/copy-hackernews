@@ -4,7 +4,9 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import './Card.css'
+import "./Card.css";
+import { Link, Routes, Route } from "react-router-dom";
+import CardDetails from "./CardDetails";
 
 // const bull = (
 //   <Box
@@ -15,20 +17,30 @@ import './Card.css'
 //   </Box>
 // );
 
-const BasicCard = ({ title, author, url, num_comments}) => {
-return(
-  <Card sx={{ minWidth: 275 }}>
-      <CardContent>
-        <Typography variant="h5" component="div">
-        <a href={url}><b>{title}</b></a>
-        </Typography>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          By {author}
-        </Typography>
-        <Typography variant="body2">
-          {num_comments} comments
-        </Typography>
-      </CardContent>
-    </Card>
-)}
+const BasicCard = (e) => {
+  return (
+    <div>
+      <Card sx={{ minWidth: 275 }}>
+        <CardContent>
+          <Typography variant="h5" component="div">
+            <a href={e.url}>
+              <b>{e.title}</b>
+            </a>
+          </Typography>
+          <Typography sx={{ mb: 1.5 }} color="text.secondary">
+            By {e.author}
+          </Typography>
+          <Typography variant="body2">{e.num_comments} comments</Typography>
+
+          <Link to={`/news/${e.objectID}`}>Details</Link>
+          {/* <Routes>
+            <Route path="/card" element={<Card />} />
+            <Route path="/carddetails/:objectID" element={<CardDetails element={e}/>} />
+          </Routes> */}
+
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
 export default BasicCard;
