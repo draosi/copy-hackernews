@@ -1,35 +1,58 @@
-import axios from 'axios'
-import {useState, useEffect} from 'react'
-import { useParams } from 'react-router-dom';
-
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import Loader from "./Loader";
+import "./CardDetails.css";
+import parse from "html-react-parser";
 
 const CardDetails = () => {
-    
-    const [data, setData] = useState([]);
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-    useEffect(()=>{
-        fetchCardDetails()
-    }, [])
+  useEffect(() => {
+    fetchCardDetails();
+  }, []);
 
-    let {id} = useParams()
-    
-    const fetchCardDetails = async () => {
-        try {
-          await axios.get(`http://hn.algolia.com/api/v1/items/${id}`)
-          .then((res) => setData(res))
-        } catch (err) {
-          console.log(err);
-        }
+  let { id } = useParams();
+  let navigate = useNavigate();
+
+  const fetchCardDetails = async () => {
+    try {
+      const firstCall = await axios.get(
+        `http://hn.algolia.com/api/v1/items/${id}`
+      );
+      const secondCall = await firstCall.data.children.filter(
+        (el) => el.author && el.text
+      );
+      setData(secondCall);
+      setLoading(true);
+    } catch (err) {
+      console.log(err);
     }
+  };
 
-    console.log(data)
-    
-    return(
-        <div>
-            <h1>{data.data.author}</h1>
-            <h2>{data.data.title}</h2>
-        </div>
-    )
-}
+  console.log(data);
 
-export default CardDetails
+  return (
+    <div className="card-details">
+      <button onClick={() => navigate("/")}>Go Home</button>
+      {loading ? (
+        data.map((e) => {
+          {
+            console.log(e);
+          }
+          return (
+            <div className="comment">
+              <h1>{e.author}</h1>
+              <p>{e.text}</p>
+            </div>
+          );
+        })
+      ) : (
+        <Loader />
+      )}
+    </div>
+  );
+};
+
+export default CardDetails;
