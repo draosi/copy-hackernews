@@ -35,7 +35,9 @@ const CardDetails = () => {
 
   return (
     <div className="card-details">
-      <button onClick={() => navigate("/")}>Go Home</button>
+      <div style={{ textAlign: "center", paddingTop: "10px" }}>
+        <button onClick={() => navigate("/")}>Go Home</button>
+      </div>
       {loading ? (
         data.map((e) => {
           {
@@ -44,12 +46,21 @@ const CardDetails = () => {
           return (
             <div className="comment">
               <h1>{e.author}</h1>
-              <p>{e.text}</p>
+              <p>{parse(String(e.text))}</p>
             </div>
           );
         })
       ) : (
-        <Loader />
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: "50px",
+          }}
+        >
+          <Loader />
+        </div>
       )}
     </div>
   );
